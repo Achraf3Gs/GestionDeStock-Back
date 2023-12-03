@@ -24,6 +24,7 @@ public class RegisterRequest {
     private String email;
     private String idEntreprise;
     private String moteDePasse;
+
     private String photo;
 
 

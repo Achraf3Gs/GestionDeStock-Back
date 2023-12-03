@@ -7,7 +7,9 @@ package com.Guesmi.gestiondestock.config;
 
 import com.Guesmi.gestiondestock.repository.UtilisateurRepository;
 
+import com.Guesmi.gestiondestock.services.auth.ApplicationUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,22 +25,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationConfig {
 
+    @Autowired
+    private ApplicationUserDetailsService applicationUserDetailsService;
+
 
     private final UtilisateurRepository userRepository;
 
 
-    @Bean
-    public UserDetailsService userDetailsService() {
 
-        return username-> userRepository.findByEmail(username)
-                .orElseThrow(()->new UsernameNotFoundException("User not found"));
-
-    }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider= new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setUserDetailsService(applicationUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
