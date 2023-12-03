@@ -6,13 +6,14 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   ## Specify DBMS
   jpa:
-    database: MYSQL
-    show-sql: false
-
-    # Hibernate DDL Auto (create, create-drop, update)
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+       # session_factory:
+        #  statement_inspector: com.Guesmi.gestiondestock.interceptor.CustomStatementInspector
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
 
 server:
   port: 8082
