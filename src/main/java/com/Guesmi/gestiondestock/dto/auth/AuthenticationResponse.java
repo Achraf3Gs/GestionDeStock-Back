@@ -1,6 +1,7 @@
 package com.Guesmi.gestiondestock.dto.auth;
 
 
+import com.Guesmi.gestiondestock.model.Adresse;
 import com.Guesmi.gestiondestock.model.Roles;
 
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ public class AuthenticationResponse {
 
     private String name;
 
-    private String address;
+    private Adresse address;
 
     private String idEntreprise;
 

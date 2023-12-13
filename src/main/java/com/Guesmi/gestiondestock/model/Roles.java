@@ -1,6 +1,7 @@
 package com.Guesmi.gestiondestock.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,7 @@ public class Roles extends AbstractEntity{
 
     @ManyToOne
     @JoinColumn(name = "idutilisateur")
+    @JsonIgnore
     private Utilisateur utilisateur;
 
 

@@ -3,6 +3,7 @@ package com.Guesmi.gestiondestock.controller;
 import com.Guesmi.gestiondestock.controller.api.UtilisateurApi;
 import com.Guesmi.gestiondestock.dto.UtilisateurDto;
 import com.Guesmi.gestiondestock.services.UtilisateurService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import static com.Guesmi.gestiondestock.utils.Constants.UTILISATEUR_ENDPOINT;
 @RestController
 @RequestMapping(UTILISATEUR_ENDPOINT)
 @Tag(name="Utilisateur-Rest")
+
 public class UtilisateurController implements UtilisateurApi {
     private UtilisateurService utilisateurService;
 

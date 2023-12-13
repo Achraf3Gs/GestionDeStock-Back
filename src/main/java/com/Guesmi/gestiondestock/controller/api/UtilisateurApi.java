@@ -5,7 +5,7 @@ import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@Api("Utilisateur")
+@Api("Utilisateurs")
 public interface UtilisateurApi {
     @PostMapping( "/create")
     UtilisateurDto save(@RequestBody UtilisateurDto dto);

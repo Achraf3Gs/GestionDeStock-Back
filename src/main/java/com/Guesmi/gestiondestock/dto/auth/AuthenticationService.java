@@ -9,6 +9,7 @@ package com.Guesmi.gestiondestock.dto.auth;
 
 
 import com.Guesmi.gestiondestock.config.JwtService;
+import com.Guesmi.gestiondestock.model.Adresse;
 import com.Guesmi.gestiondestock.model.Entreprise;
 import com.Guesmi.gestiondestock.model.Roles;
 import com.Guesmi.gestiondestock.model.Utilisateur;
@@ -96,12 +97,14 @@ public class AuthenticationService {
             String username = jwtService.extractUsername(jwtToken);
             String idEntreprise= String.valueOf(user.getEntreprise().getId());
             String nom= user.getNom();
+            Adresse adresse = user.getAdresse();
             Integer id = user.getId();
             AuthenticationResponse response = AuthenticationResponse.builder()
-
+                    .message("success authentification")
                     .token(jwtToken)
                     .idEntreprise(idEntreprise)
                     .id(id)
+                    .address(adresse)
                     .name(nom)
                     .build();
             return response;

@@ -1,11 +1,14 @@
 package com.Guesmi.gestiondestock.services.impl;
 
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 import com.Guesmi.gestiondestock.dto.EntrepriseDto;
+import com.Guesmi.gestiondestock.dto.RolesDto;
+import com.Guesmi.gestiondestock.dto.UtilisateurDto;
 import com.Guesmi.gestiondestock.exception.EntityNotFoundException;
 import com.Guesmi.gestiondestock.exception.ErrorCodes;
 import com.Guesmi.gestiondestock.exception.InvalidEntityException;
@@ -17,6 +20,7 @@ import com.Guesmi.gestiondestock.validator.EntrepriseValidator;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Transactional(rollbackOn = Exception.class)
@@ -27,13 +31,15 @@ public class EntrepriseServiceImpl implements EntrepriseService {
   private EntrepriseRepository entrepriseRepository;
   private UtilisateurService utilisateurService;
   private RolesRepository rolesRepository;
+  private final PasswordEncoder passwordEncoder;
 
   @Autowired
   public EntrepriseServiceImpl(EntrepriseRepository entrepriseRepository, UtilisateurService utilisateurService,
-      RolesRepository rolesRepository) {
+      RolesRepository rolesRepository, PasswordEncoder passwordEncoder) {
     this.entrepriseRepository = entrepriseRepository;
     this.utilisateurService = utilisateurService;
     this.rolesRepository = rolesRepository;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Override
@@ -43,12 +49,46 @@ public class EntrepriseServiceImpl implements EntrepriseService {
       log.error("Entreprise is not valid {}", dto);
       throw new InvalidEntityException("L'entreprise n'est pas valide", ErrorCodes.ENTREPRISE_NOT_VALID, errors);
     }
-    return EntrepriseDto.fromEntity(
-            entrepriseRepository.save(
-                    EntrepriseDto.toEntity(dto)
-            )
+    EntrepriseDto savedEntreprise = EntrepriseDto.fromEntity(
+            entrepriseRepository.save(EntrepriseDto.toEntity(dto))
     );
+    UtilisateurDto utilisateur = fromEntreprise(savedEntreprise);
+
+    UtilisateurDto savedUser = utilisateurService.save(utilisateur);
+
+    RolesDto rolesDto = RolesDto.builder()
+            .roleName("ADMIN")
+            .utilisateur(savedUser)
+            .build();
+
+    rolesRepository.save(RolesDto.toEntity(rolesDto));
+
+    return  savedEntreprise;
   }
+
+  private UtilisateurDto fromEntreprise(EntrepriseDto dto) {
+    return UtilisateurDto.builder()
+            .adresse(dto.getAdresse())
+            .nom(dto.getNom())
+            .prenom(dto.getCodeFiscal())
+            .email(dto.getEmail())
+            .moteDePasse(passwordEncoder.encode(generateRandomPassword()))
+            .entreprise(dto)
+            .dateDeNaissance(Instant.now())
+            .photo(dto.getPhoto())
+            .build();
+  }
+
+  private String generateRandomPassword() {
+    return "som3R@nd0mP@$$word";
+  }
+
+
+
+
+
+
+
 
   @Override
   public EntrepriseDto findById(Integer id) {

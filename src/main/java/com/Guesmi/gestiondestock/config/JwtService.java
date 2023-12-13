@@ -32,8 +32,9 @@ public class JwtService {
     }
     public String extractIdEntreprise(String token) {
         final Claims claims = extractAllClaims(token);
+        return (String) claims.get("idEntreprise");
 
-        return claims.get("idEntreprise", String.class);
+
     }
 
     private Utilisateur utilisateur;
@@ -51,9 +52,9 @@ public class JwtService {
         Map<String,Object> claims = new HashMap<>();
         claims.put("id",utilisateur.getId()+"");
         claims.put("name", utilisateur.getNom());
-        claims.put("idEntreprise", utilisateur.getEntreprise().getId());
+        claims.put("idEntreprise", String.valueOf(utilisateur.getEntreprise().getId()));
         claims.put("address", utilisateur.getPrenom());
-        claims.put("role", utilisateur.getRoles());
+        
         return Jwts
                 .builder()
                 .setClaims(claims)

@@ -2,13 +2,17 @@ package com.Guesmi.gestiondestock.dto;
 
 import com.Guesmi.gestiondestock.model.Entreprise;
 import com.Guesmi.gestiondestock.model.Utilisateur;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Builder
 @Data
+@AllArgsConstructor
+
 public class EntrepriseDto {
 
     private  Integer id;
@@ -30,6 +34,10 @@ public class EntrepriseDto {
     private String steWeb;
 
     private List<Utilisateur> utilisateurs;
+
+    public EntrepriseDto() {
+        // Default constructor
+    }
 
     public static EntrepriseDto fromEntity(Entreprise entreprise) {
         if (entreprise == null) {

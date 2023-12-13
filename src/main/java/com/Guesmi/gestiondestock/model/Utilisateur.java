@@ -2,6 +2,7 @@ package com.Guesmi.gestiondestock.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,6 +32,7 @@ public class Utilisateur extends AbstractEntity {
     @Column(name = "email")
     private String email;
 
+    @JsonSerialize
     @Column(name = "datedenaissance")
     private Instant dateDeNaissance;
 

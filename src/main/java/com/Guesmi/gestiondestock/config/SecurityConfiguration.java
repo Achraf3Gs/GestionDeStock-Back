@@ -31,23 +31,20 @@ public class SecurityConfiguration {
                 .disable()
 
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/index.html", "/home", "/styles**", "/runtime**", "/polyfills**",
-                        "/main**","/favicon.png", "/assets/foods/**","/assets/stars/**").permitAll()
-                .requestMatchers("/api/v1/auth/register","/api/v1/auth/authenticate",
-                        "/**/entreprises/create",
+                .requestMatchers("/api/v1/auth/register", "/api/v1/auth/authenticate",
+                        "/gestiondestock/v1/entreprises/create",
                         "/v2/api-docs",
+                        "/v3/api-docs",
+                        "/v3/api-docs/**",
                         "/swagger-resources",
                         "/swagger-resources/**",
                         "/configuration/ui",
                         "/configuration/security",
                         "/swagger-ui.html",
-                        "/webjars/**",
-                        "/v3/api-docs/**",
-                        "/swagger-ui/**")
+                        "/swagger-ui/**",  // Retain this pattern
+                        "/webjars/**")
                 .permitAll()
                 .requestMatchers("/login")
-                .permitAll()
-                .requestMatchers("/api/v1/auth/foods","/api/v1/auth/foods/tags" )
                 .permitAll()
                 .anyRequest()
                 .authenticated()

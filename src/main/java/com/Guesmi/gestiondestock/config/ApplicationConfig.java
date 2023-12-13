@@ -8,6 +8,8 @@ package com.Guesmi.gestiondestock.config;
 import com.Guesmi.gestiondestock.repository.UtilisateurRepository;
 
 import com.Guesmi.gestiondestock.services.auth.ApplicationUserDetailsService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -50,7 +52,12 @@ public class ApplicationConfig {
         return new BCryptPasswordEncoder();
     }
 
-
+    @Bean
+    public ObjectMapper objectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        return objectMapper;
+    }
 
 }
 

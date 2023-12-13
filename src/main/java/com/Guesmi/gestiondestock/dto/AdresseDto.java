@@ -1,11 +1,13 @@
 package com.Guesmi.gestiondestock.dto;
 
 import com.Guesmi.gestiondestock.model.Adresse;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Builder
 @Data
+@AllArgsConstructor
 public class AdresseDto extends Adresse {
 
     private String adresse1;
@@ -18,7 +20,9 @@ public class AdresseDto extends Adresse {
 
     private String pays;
 
-
+    public AdresseDto() {
+        // Default constructor
+    }
     public static AdresseDto fromEntity(Adresse adresse) {
         if (adresse == null) {
             return null;
